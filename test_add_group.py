@@ -39,11 +39,7 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element_by_name("submit").click()
         wd.find_element_by_link_text("group page").click()
         wd.find_element_by_link_text("Logout").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.get("https://software-testing.ru/lms/mod/url/view.php?id=314485")
-        wd.find_element_by_id("id_videojs_63bd2bc40b481_1_html5_api").click()
-        wd.find_element_by_id("id_videojs_63bd2bc40b481_1_html5_api").click()
+
     
     def is_element_present(self, how, what):
         try: self.wd.find_element(by=how, value=what)
