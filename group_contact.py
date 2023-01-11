@@ -20,3 +20,20 @@ class Contact_data:
         self.email2 = email2
         self.email3 = email3
         self.homepage = homepage
+
+
+class Birthday:
+    def __init__(self, bday, bmonth, byear, aday, amonth, ayear):
+        self.bday = bday
+        self.bmonth = bmonth
+        self.byear = byear
+        self.aday = aday
+        self.amonth = amonth
+        self.ayear = ayear
+
+
+class Secondary_data:
+    def __init__(self, address2, phone2, notes):
+        self.address2 = address2
+        self.phone2 = phone2
+        self.notes = notes

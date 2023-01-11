@@ -24,7 +24,7 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "pass").clear()
         wd.find_element(By.NAME, "pass").send_keys(password)
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
-    def Create_contact(self, wd, Primary_data, Contact_data):
+    def Create_contact(self, wd, Primary_data, Contact_data, Birthday, Secondary_data):
         # Init contact creation
         wd.find_element(By.LINK_TEXT, "add new").click()
         # Filling the form
@@ -79,33 +79,33 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "homepage").send_keys(Contact_data.homepage)
         # Birthday
         wd.find_element(By.NAME, "bday").click()
-        Select(wd.find_element(By.NAME, "bday")).select_by_visible_text("10")
+        Select(wd.find_element(By.NAME, "bday")).select_by_visible_text(Birthday.bday)
         wd.find_element(By.XPATH, "//option[@value='10']").click()
         wd.find_element(By.NAME, "bmonth").click()
-        Select(wd.find_element(By.NAME, "bmonth")).select_by_visible_text("January")
+        Select(wd.find_element(By.NAME, "bmonth")).select_by_visible_text(Birthday.bmonth)
         wd.find_element(By.XPATH, "//option[@value='January']").click()
         wd.find_element(By.NAME, "byear").click()
         wd.find_element(By.NAME, "byear").clear()
-        wd.find_element(By.NAME, "byear").send_keys("2000")
+        wd.find_element(By.NAME, "byear").send_keys(Birthday.byear)
         wd.find_element(By.NAME, "aday").click()
-        Select(wd.find_element(By.NAME, "aday")).select_by_visible_text("5")
+        Select(wd.find_element(By.NAME, "aday")).select_by_visible_text(Birthday.aday)
         wd.find_element(By.XPATH, "//div[@id='content']/form/select[3]/option[7]").click()
         wd.find_element(By.NAME, "amonth").click()
-        Select(wd.find_element(By.NAME, "amonth")).select_by_visible_text("February")
+        Select(wd.find_element(By.NAME, "amonth")).select_by_visible_text(Birthday.amonth)
         wd.find_element(By.XPATH, "//div[@id='content']/form/select[4]/option[3]").click()
         wd.find_element(By.NAME, "ayear").click()
         wd.find_element(By.NAME, "ayear").clear()
-        wd.find_element(By.NAME, "ayear").send_keys("2010")
+        wd.find_element(By.NAME, "ayear").send_keys(Birthday.ayear)
         # Secondary data
         wd.find_element(By.NAME, "address2").click()
         wd.find_element(By.NAME, "address2").clear()
-        wd.find_element(By.NAME, "address2").send_keys("ppp")
+        wd.find_element(By.NAME, "address2").send_keys(Secondary_data.address2)
         wd.find_element(By.NAME, "phone2").click()
         wd.find_element(By.NAME, "phone2").clear()
-        wd.find_element(By.NAME, "phone2").send_keys("qqq")
+        wd.find_element(By.NAME, "phone2").send_keys(Secondary_data.phone2)
         wd.find_element(By.NAME, "notes").click()
         wd.find_element(By.NAME, "notes").clear()
-        wd.find_element(By.NAME, "notes").send_keys("rrr")
+        wd.find_element(By.NAME, "notes").send_keys(Secondary_data.notes)
         # Submiting the form
         wd.find_element(By.NAME, "theform").click()
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
@@ -117,7 +117,12 @@ class TestAddContact(unittest.TestCase):
         wd = self.wd
         self.Open_main_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.Create_contact(wd)
+        self.Create_contact(wd, Primary_data(firstname="test", middlename="test test", lastname="ccc", nickname="ddd",
+                                             title="eee", company="fff", address="ggg"), \
+            Contact_data(home="hhh", mobile="iii", work="jjj", fax="kkk", email="lll", email2="mmm", email3="nnn",
+                         homepage="ooo"), \
+            Birthday(bday="10", bmonth="January", byear="2000", aday="5", amonth="February", ayear="2010"), \
+            Secondary_data(address2="ppp", phone2="qqq", notes="rrr"))
         self.Logout(wd)
 
     def is_element_present(self, how, what):
