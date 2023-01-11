@@ -1,4 +1,6 @@
 
+# Data for filling the new contact form
+
 class Primary_data:
     def __init__(self, firstname, middlename, lastname, nickname, title, company, address):
         self.firstname = firstname

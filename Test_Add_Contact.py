@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoAlertPresentException
 from group_contact import *
 import unittest
 
+
 class TestAddContact(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
@@ -24,7 +25,8 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "pass").clear()
         wd.find_element(By.NAME, "pass").send_keys(password)
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
-    def Create_contact(self, wd, Primary_data, Contact_data, Birthday, Secondary_data):
+
+    def Create_contact(self, wd, Primary_data, Contact_data, Secondary_data):
         # Init contact creation
         wd.find_element(By.LINK_TEXT, "add new").click()
         # Filling the form
@@ -77,7 +79,18 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "homepage").click()
         wd.find_element(By.NAME, "homepage").clear()
         wd.find_element(By.NAME, "homepage").send_keys(Contact_data.homepage)
-        # Birthday
+        # Secondary data
+        wd.find_element(By.NAME, "address2").click()
+        wd.find_element(By.NAME, "address2").clear()
+        wd.find_element(By.NAME, "address2").send_keys(Secondary_data.address2)
+        wd.find_element(By.NAME, "phone2").click()
+        wd.find_element(By.NAME, "phone2").clear()
+        wd.find_element(By.NAME, "phone2").send_keys(Secondary_data.phone2)
+        wd.find_element(By.NAME, "notes").click()
+        wd.find_element(By.NAME, "notes").clear()
+        wd.find_element(By.NAME, "notes").send_keys(Secondary_data.notes)
+
+    def birthday(self, wd, Birthday):
         wd.find_element(By.NAME, "bday").click()
         Select(wd.find_element(By.NAME, "bday")).select_by_visible_text(Birthday.bday)
         wd.find_element(By.XPATH, "//option[@value='10']").click()
@@ -96,17 +109,8 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "ayear").click()
         wd.find_element(By.NAME, "ayear").clear()
         wd.find_element(By.NAME, "ayear").send_keys(Birthday.ayear)
-        # Secondary data
-        wd.find_element(By.NAME, "address2").click()
-        wd.find_element(By.NAME, "address2").clear()
-        wd.find_element(By.NAME, "address2").send_keys(Secondary_data.address2)
-        wd.find_element(By.NAME, "phone2").click()
-        wd.find_element(By.NAME, "phone2").clear()
-        wd.find_element(By.NAME, "phone2").send_keys(Secondary_data.phone2)
-        wd.find_element(By.NAME, "notes").click()
-        wd.find_element(By.NAME, "notes").clear()
-        wd.find_element(By.NAME, "notes").send_keys(Secondary_data.notes)
-        # Submiting the form
+
+    def Submiting_the_form(self, wd):
         wd.find_element(By.NAME, "theform").click()
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
 
@@ -121,10 +125,13 @@ class TestAddContact(unittest.TestCase):
                                              title="eee", company="fff", address="ggg"),
             Contact_data(home="hhh", mobile="iii", work="jjj", fax="kkk", email="lll", email2="mmm", email3="nnn",
                          homepage="ooo"),
-            Birthday(bday="10", bmonth="January", byear="2000", aday="5", amonth="February", ayear="2010"),
             Secondary_data(address2="ppp", phone2="qqq", notes="rrr"))
+        self.birthday(wd, Birthday(bday="10", bmonth="January", byear="2000", aday="5", amonth="February",
+                                   ayear="2010"))
+        self.Submiting_the_form(wd)
         self.Logout(wd)
 
+# for empty contact the test runs without birthday method
     def test_add_empty_contact(self):
         wd = self.wd
         self.Open_main_page(wd)
@@ -133,8 +140,8 @@ class TestAddContact(unittest.TestCase):
                                              title="", company="", address=""),
             Contact_data(home="", mobile="", work="", fax="", email="", email2="", email3="",
                          homepage=""),
-            Birthday(bday="", bmonth="", byear="", aday="", amonth="", ayear=""),
             Secondary_data(address2="", phone2="", notes=""))
+        self.Submiting_the_form(wd)
         self.Logout(wd)
 
     def is_element_present(self, how, what):
