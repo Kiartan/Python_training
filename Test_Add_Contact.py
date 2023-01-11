@@ -118,26 +118,37 @@ class TestAddContact(unittest.TestCase):
         self.Open_main_page(wd)
         self.login(wd, username="admin", password="secret")
         self.Create_contact(wd, Primary_data(firstname="test", middlename="test test", lastname="ccc", nickname="ddd",
-                                             title="eee", company="fff", address="ggg"), \
+                                             title="eee", company="fff", address="ggg"),
             Contact_data(home="hhh", mobile="iii", work="jjj", fax="kkk", email="lll", email2="mmm", email3="nnn",
-                         homepage="ooo"), \
-            Birthday(bday="10", bmonth="January", byear="2000", aday="5", amonth="February", ayear="2010"), \
+                         homepage="ooo"),
+            Birthday(bday="10", bmonth="January", byear="2000", aday="5", amonth="February", ayear="2010"),
             Secondary_data(address2="ppp", phone2="qqq", notes="rrr"))
+        self.Logout(wd)
+
+    def test_add_empty_contact(self):
+        wd = self.wd
+        self.Open_main_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.Create_contact(wd, Primary_data(firstname="", middlename="", lastname="", nickname="",
+                                             title="", company="", address=""),
+            Contact_data(home="", mobile="", work="", fax="", email="", email2="", email3="",
+                         homepage=""),
+            Birthday(bday="", bmonth="", byear="", aday="", amonth="", ayear=""),
+            Secondary_data(address2="", phone2="", notes=""))
         self.Logout(wd)
 
     def is_element_present(self, how, what):
         try: self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
         return True
-    
+
     def is_alert_present(self):
         try: self.wd.switch_to_alert()
         except NoAlertPresentException as e: return False
         return True
-    
+
     def tearDown(self):
         self.wd.quit()
-
 
 if __name__ == "__main__":
     unittest.main()
