@@ -74,7 +74,7 @@ class TestAddGroup(unittest.TestCase):
         return True
     
     def is_alert_present(self):
-        try: self.wd.switch_to_alert()
+        try: self.wd.switch_to.alert()
         except NoAlertPresentException as e: return False
         return True
     
