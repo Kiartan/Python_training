@@ -6,11 +6,11 @@ class GroupHelper:
         self.app = app
 
     def open_groups_page(self):
-        wd = self.wd
+        wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "groups").click()
 
     def create(self, group):
-        wd = self.wd
+        wd = self.app.wd
         self.open_groups_page()
         # init group creation
         wd.find_element(By.NAME, "new").click()
@@ -30,5 +30,5 @@ class GroupHelper:
         self.return_to_group_page()
 
     def return_to_group_page(self):
-        wd = self.wd
+        wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "group page").click()
