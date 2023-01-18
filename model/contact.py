@@ -29,5 +29,3 @@ class Contact:
         self.address2 = address2
         self.phone2 = phone2
         self.notes = notes
-
-
