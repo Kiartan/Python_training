@@ -6,8 +6,13 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def fill_the_contact(self, contact):
+    def open_contact_page(self):
         wd = self.app.wd
+        if not (wd.current_url.endswith("/addressbook/") and
+                len(wd.find_elements(By.XPATH, "//input[@value='Send_e-Mail']"))) > 0:
+            wd.get("http://localhost/addressbook/addressbook/")
+
+    def fill_the_contact(self, contact):
         # Primary data
         self.app.group.change_field_value("firstname", contact.firstname)
         self.app.group.change_field_value("middlename", contact.middlename)
@@ -46,7 +51,7 @@ class ContactHelper:
     def create(self, contact):
         wd = self.app.wd
         # Open page with contacts
-        self.app.open_home_page()
+        self.open_contact_page()
         # Init contact creation
         wd.find_element(By.LINK_TEXT, "add new").click()
         # Filling the form
@@ -58,7 +63,7 @@ class ContactHelper:
     def modify_first_contact(self, contact):
         wd = self.app.wd
         # Open page with contacts
-        self.app.open_home_page()
+        self.open_contact_page()
         # select first contact
         wd.find_element(By.NAME, "selected[]").click()
         # edit
@@ -70,7 +75,7 @@ class ContactHelper:
     def delete_first_contact(self):
         wd = self.app.wd
         # Open page with contacts
-        self.app.open_home_page()
+        self.open_contact_page()
         # select first contact
         wd.find_element(By.NAME, "selected[]").click()
         # submit deletion
@@ -80,5 +85,5 @@ class ContactHelper:
 
     def count(self):
         wd = self.app.wd
-        self.app.open_home_page()
+        self.open_contact_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
