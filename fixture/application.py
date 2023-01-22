@@ -21,7 +21,14 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements(By.NAME, "user")) > 0):
+        if wd.current_url.endswith("/addressbook/") and len(wd.find_elements(By.NAME, "user")) > 0:  # checking if
+            # logging page is open
+            return
+        elif wd.current_url.endswith("/addressbook/") \
+                and len(wd.find_elements(By.XPATH, "//input[@value='Send_e-Mail']")) > 0:  # checking if contact list
+            # is open
+            return
+        else:
             wd.get("http://localhost/addressbook/addressbook/")
 
     def destroy(self):

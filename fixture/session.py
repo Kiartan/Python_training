@@ -29,7 +29,7 @@ class SessionHelper:
     def logout(self):
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "Logout").click()
-        # wd.find_element(By.NAME, "user")
+        # wd.find_element(By.NAME, "user") - suddenly it stopped working
 
     def ensure_logout(self):
         if self.is_logged_in():
