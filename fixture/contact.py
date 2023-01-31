@@ -7,6 +7,14 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element(By.NAME, "selected[]").click()
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements(By.NAME, "selected[]") [index].click()
+
     def fill_the_contact(self, contact):
         # Primary data
         self.app.group.change_field_value("firstname", contact.firstname)
@@ -56,12 +64,14 @@ class ContactHelper:
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
         self.contact_cache = None
 
-    def modify_first_contact(self, contact):
+    def modify_first_contact(self):
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         # Open page with contacts
         self.app.open_home_page()
-        # select first contact
-        wd.find_element(By.NAME, "selected[]").click()
+        self.select_contact_by_index(index)
         # edit
         wd.find_element(By.XPATH, "//img[@alt='Edit']").click()
         self.fill_the_contact(contact)
@@ -70,11 +80,13 @@ class ContactHelper:
         self.contact_cache = None
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         # Open page with contacts
         self.app.open_home_page()
-        # select first contact
-        wd.find_element(By.NAME, "selected[]").click()
+        self.select_contact_by_index(index)
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         alert = wd.switch_to.alert
