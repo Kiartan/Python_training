@@ -86,18 +86,9 @@ class ContactHelper:
     def get_contact_list(self):
         wd = self.app.wd
         self.app.open_home_page()
-        con1 = []
-        con2 = []
-        for element in wd.find_elements(By.CSS_SELECTOR, "tr."):
-            for element1 in wd.find_elements(By.CSS_SELECTOR, "td.center"):
-                id = element1.find_element(By.NAME, "selected[]").get_attribute("value")
-                return id
-            for element2 in wd.find_elements(By.CSS_SELECTOR, "td"):
-                text = element2.text
-                return text
-            con1.append(Contact(lastname=text, id=id))
-            return con1
-        # for element in wd.find_elements(By.CSS_SELECTOR, "tr.odd"):
-            # return con2
-        contacts = [con1.append(list[con2])]
+        contacts = []
+        for element in wd.find_elements(By.CSS_SELECTOR, "td:nth-child(1)"):
+            title = element.find_element(By.NAME, "selected[]").get_attribute("title")
+            id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+            contacts.append(Contact(group_title=title, id=id))
         return contacts
