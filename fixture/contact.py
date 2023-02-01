@@ -77,6 +77,7 @@ class ContactHelper:
         self.fill_the_contact(contact)
         # update and return
         wd.find_element(By.NAME, "update").click()
+        wd.find_element(By.LINK_TEXT, "home page").click()
         self.contact_cache = None
 
     def delete_first_contact(self):
