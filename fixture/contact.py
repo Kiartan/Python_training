@@ -73,7 +73,7 @@ class ContactHelper:
         self.app.open_home_page()
         self.select_contact_by_index(index)
         # edit
-        wd.find_element(By.XPATH, "//img[@alt='Edit']").click()
+        wd.find_elements(By.XPATH, "//img[@alt='Edit']") [index].click()
         self.fill_the_contact(contact)
         # update and return
         wd.find_element(By.NAME, "update").click()
