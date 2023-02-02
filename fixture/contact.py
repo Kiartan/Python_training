@@ -109,13 +109,15 @@ class ContactHelper:
             self.contact_cache = []
             for element in wd.find_elements(By.NAME, "entry"):
                 cells = element.find_elements(By.TAG_NAME, "td")
+                id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
                 last = cells[1].text
                 first = cells[2].text
-                id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
-                all_phones = cells[5].text.splitlines()
-                self.contact_cache.append(Contact(lastname=last, firstname=first, id=id, phone_home=all_phones[0],
-                                                  phone_mobile=all_phones[1], phone_work=all_phones[2],
-                                                  phone2=all_phones[3]))
+                address = cells[3].text
+                all_emails = cells[4].text
+                all_phones = cells[5].text
+                self.contact_cache.append(Contact(id=id, lastname=last, firstname=first, address=address,
+                                                  all_emails_from_home_page=all_emails,
+                                                  all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
     def open_contact_view_by_index(self, index):
@@ -138,11 +140,17 @@ class ContactHelper:
         firstname = wd.find_element(By.NAME, "firstname").get_attribute("value")
         lastname = wd.find_element(By.NAME, "lastname").get_attribute("value")
         id = wd.find_element(By.NAME, "id").get_attribute("value")
+        address = wd.find_element(By.NAME, "address").get_attribute("value")
+        email = wd.find_element(By.NAME, "email").get_attribute("value")
+        email2 = wd.find_element(By.NAME, "email2").get_attribute("value")
+        email3 = wd.find_element(By.NAME, "email3").get_attribute("value")
         phone_home = wd.find_element(By.NAME, "home").get_attribute("value")
         phone_mobile = wd.find_element(By.NAME, "mobile").get_attribute("value")
         phone_work = wd.find_element(By.NAME, "work").get_attribute("value")
         phone2 = wd.find_element(By.NAME, "phone2").get_attribute("value")
-        return Contact(firstname=firstname, lastname=lastname, id=id, phone_home=phone_home, phone_mobile=phone_mobile,
+        return Contact(firstname=firstname, lastname=lastname, id=id, address=address,
+                       email=email, email2=email2, email3=email3,
+                       phone_home=phone_home, phone_mobile=phone_mobile,
                        phone_work=phone_work, phone2=phone2)
 
     def get_contact_from_view_page(self, index):
