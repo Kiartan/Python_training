@@ -150,8 +150,7 @@ class ContactHelper:
         phone2 = wd.find_element(By.NAME, "phone2").get_attribute("value")
         return Contact(firstname=firstname, lastname=lastname, id=id, address=address,
                        email=email, email2=email2, email3=email3,
-                       phone_home=phone_home, phone_mobile=phone_mobile,
-                       phone_work=phone_work, phone2=phone2)
+                       phone_home=phone_home, phone_mobile=phone_mobile, phone_work=phone_work, phone2=phone2)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
