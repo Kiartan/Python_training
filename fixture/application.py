@@ -18,7 +18,7 @@ class Application:
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
-        self.base_url = base_url(self)
+        self.base_url = base_url
 
     def is_valid(self):
         try:
