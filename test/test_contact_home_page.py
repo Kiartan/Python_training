@@ -18,13 +18,17 @@ def test_contact_on_home_page(app):
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
 
 
-def clear(s):
+def clear_phone(s):
     return re.sub("[() -]", "", s)
+
+
+def clear_email(s):
+    return re.sub("[()&<>'`{[]}]", "", s)
 
 
 def merge_phones_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
-                            map(lambda x: clear(x),
+                            map(lambda x: clear_phone(x),
                                 filter(lambda x: x is not None,
                                        [contact.phone_home, contact.phone_mobile,
                                         contact.phone_work, contact.phone2]))))
@@ -32,5 +36,5 @@ def merge_phones_like_on_home_page(contact):
 
 def merge_emails_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
-                            map(lambda x: clear(x),
+                            map(lambda x: clear_email(x),
                                 filter(lambda x: x is not None, [contact.email, contact.email2, contact.email3]))))

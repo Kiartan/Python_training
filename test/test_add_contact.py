@@ -8,7 +8,7 @@ import re
 
 
 def clear(s):
-    return re.sub("[' `]", "", s)
+    return re.sub("['`\/]", "", s)
 
 
 def random_string(prefix, maxlen):
