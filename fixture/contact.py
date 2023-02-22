@@ -85,6 +85,19 @@ class ContactHelper:
         wd.find_element(By.LINK_TEXT, "home page").click()
         self.contact_cache = None
 
+    def modify_contact_by_id(self, id, contact):
+        wd = self.app.wd
+        # Open page with contacts
+        self.app.open_home_page()
+        self.select_contact_by_id(id)
+        # edit
+        wd.find_element(By.XPATH, "//a[@href='edit.php?id=%s']" % id).click()
+        self.fill_the_contact(contact)
+        # update and return
+        wd.find_element(By.NAME, "update").click()
+        wd.find_element(By.LINK_TEXT, "home page").click()
+        self.contact_cache = None
+
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
 
