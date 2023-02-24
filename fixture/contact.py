@@ -110,6 +110,7 @@ class ContactHelper:
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         alert = wd.switch_to.alert
         alert.accept()
+        wd.find_element(By.CSS_SELECTOR, "div.msgbox")
         self.contact_cache = None
 
     def delete_contact_by_id(self, id):
@@ -121,6 +122,7 @@ class ContactHelper:
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         alert = wd.switch_to.alert
         alert.accept()
+        # wd.find_element(By.CSS_SELECTOR, "div.msgbox")
         self.contact_cache = None
 
     def count(self):
