@@ -2,6 +2,7 @@ import mysql.connector
 from model.group import Group
 from model.contact import Contact
 import random
+import time
 
 
 class DbFixture:
@@ -29,8 +30,7 @@ class DbFixture:
         list = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select id, firstname, lastname, address, email, email2, email3, home, mobile, work, phone2"
-                           "from addressbook where deprecated='0000-00-00 00:00:00'")
+            cursor.execute("select id, firstname, lastname, address, email, email2, email3, home, mobile, work, phone2 from addressbook where deprecated='0000-00-00 00:00:00'")
             for row in cursor:
                 (id, firstname, lastname, address, email, email2, email3, home, mobile, work, phone2) = row
                 list.append(Contact(id=str(id), firstname=firstname, lastname=lastname, address=address, email=email,
@@ -38,6 +38,7 @@ class DbFixture:
                                     phone2=phone2))
         finally:
             cursor.close()
+            # time.sleep(1)
             return list
 
     def get_group_list_with_added_contacts(self):

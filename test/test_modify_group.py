@@ -9,11 +9,12 @@ def test_modify_group_name(app, db, check_ui):
     old_groups = db.get_group_list()
     group_no = random.choice(old_groups)
     group = Group(name="New group")
-    app.group.modify_group_by_id(group_no.id, group)
+    group2 = app.group.modify_group_by_id(group_no.id, group)
     new_groups = db.get_group_list()
     assert len(old_groups) == len(new_groups)
-    assert old_groups != new_groups
-    # old_groups[index] = group
+    old_groups.remove(group_no)
+    old_groups.append(group2)
+    assert old_groups == new_groups
     if check_ui:
         assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
