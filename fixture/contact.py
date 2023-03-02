@@ -201,12 +201,12 @@ class ContactHelper:
         # Add selected contact into one group
         self.add_to_certain_group(name)
         # Return to home page
-        wd.find_element(By.LINK_TEXT("home")).click()
+        wd.find_element(By.LINK_TEXT, "home").click()
         self.contact_cache = None
 
     def add_to_certain_group(self, name):
         wd = self.app.wd
-        wd.find_element_by_name("to_group").click()
-        Select(wd.find_element(By.NAME("to_group")).select_by_visible_text(name))
+        wd.find_element(By. NAME, "to_group").click()
+        Select(wd.find_element(By.NAME, "to_group")).select_by_visible_text(name)
         # wd.find_element_by_xpath("//div[@id='content']/form[2]/div[4]/select/option[6]").click()
-        wd.find_element(By.NAME("add")).click()
+        wd.find_element(By.NAME, "add").click()

@@ -22,8 +22,6 @@ def test_delete_contact_from_group(app, db):
     contact = random.choice(start_list)
     db.delete_contact_from_group_by_id(contact.id, group.id)
     check_list = orm.get_contacts_not_in_group(group.id)
-    for contact.id in check_list:
-        pass
     assert len(start_list) - 1 == len(check_list)
     start_list.remove(contact)
     assert start_list == check_list

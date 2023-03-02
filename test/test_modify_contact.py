@@ -8,7 +8,7 @@ def test_modify_contact(app, db, check_ui):
     if len(db.get_contact_list()) == 0:
         app.contact.create(Contact(firstname="test"))
     old_contacts = db.get_contact_list()
-    print(old_contacts)
+    # (old_contacts)
     contact = random.choice(old_contacts)
     contact_mod = Contact(firstname="edit1", middlename="edit1", lastname="edit1", nickname="edit1", title="edit1",
                           company="edit1", address="edit1", phone_home="edit2", phone_mobile="edit2",
