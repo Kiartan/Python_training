@@ -63,15 +63,5 @@ class DbFixture:
         finally:
             cursor.close()
 
-    def choose_random_contact(self, db):
-        contact_list = db.get_contact_list()
-        contact = random.choice(contact_list)
-        return contact
-
-    def choose_random_group(self, db):
-        group_list = db.get_group_list()
-        group = random.choice(group_list)
-        return group
-
     def destroy(self):
         self.connection.close()
