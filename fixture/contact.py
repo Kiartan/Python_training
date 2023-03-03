@@ -193,20 +193,22 @@ class ContactHelper:
         phone2 = re.search("P: (.*)", text).group(1)
         return Contact(phone_home=phone_home, phone_mobile=phone_mobile, phone_work=phone_work, phone2=phone2)
 
-    def add_contact_to_group_by_id(self, id, name):
+    def add_contact_to_group_by_id(self, id, group_id):
         wd = self.app.wd
         # Open contact page and select one
         self.app.open_home_page()
         self.select_contact_by_id(id)
         # Add selected contact into one group
-        self.add_to_certain_group(name)
+        self.add_to_certain_group(group_id)
         # Return to home page
         wd.find_element(By.LINK_TEXT, "home").click()
         self.contact_cache = None
 
-    def add_to_certain_group(self, name):
+    def add_to_certain_group(self, id):
         wd = self.app.wd
         wd.find_element(By. NAME, "to_group").click()
-        Select(wd.find_element(By.NAME, "to_group")).select_by_visible_text(name)
-        # wd.find_element_by_xpath("//div[@id='content']/form[2]/div[4]/select/option[6]").click()
+        wd.find_element(By.XPATH, "//option[@value='%s']" % int(id)).click()
         wd.find_element(By.NAME, "add").click()
+
+
+#/html/body/div/div[4]/form[2]/div[4]/select/option[6]

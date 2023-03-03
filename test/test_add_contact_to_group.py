@@ -15,15 +15,16 @@ def test_add_contact_to_group(app, db):
     if len(db.get_group_list()) == 0:
         app.group.create(Group(name="test_add"))
 
-    contact_list = db.get_contact_list()
+    contact_list = orm.get_contact_list()
     contact = random.choice(contact_list)
-    group_list = db.get_group_list()
+    group_list = orm.get_group_list()
     group = random.choice(group_list)
     start_list = orm.get_contacts_in_group(group)
-    app.contact.add_contact_to_group_by_id(contact.id, group.name)
+    #print(group.id)
+    app.contact.add_contact_to_group_by_id(contact.id, group.id)
     check_list = orm.get_contacts_in_group(group)
-    print(start_list)
-    # assert len(start_list) + 1 == len(check_list)
+    print(group.id, contact, start_list, check_list)
+    assert len(start_list) + 1 == len(check_list)
     # start_list.append(contact)
     # assert sorted(start_list, key=Group.id_or_max) == sorted(check_list, key=Group.id_or_max)
 

@@ -58,10 +58,11 @@ class DbFixture:
         # id2 = group id
         cursor = self.connection.cursor()
         try:
-            cursor.execute("delete from address_in_groups where `address_in_groups`.`id` = id1  "
-                           "and `address_in_groups`.`group_id` = id2")
+            cursor.execute("delete from address_in_groups where `address_in_groups`.`id` = id1 and `address_in_groups`.`group_id` = id2")
         finally:
             cursor.close()
 
     def destroy(self):
         self.connection.close()
+
+# SELECT group_list.group_id, group_list.group_name, address_in_groups.id, address_in_groups.created FROM `group_list` inner join address_in_groups on group_list.group_id = address_in_groups.group_id where group_list.group_id = 140
