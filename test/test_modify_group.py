@@ -7,14 +7,12 @@ def test_modify_group_name(app, db, check_ui):
     if len(db.get_group_list()) == 0:
         app.group.create(Group(name="test"))
     old_groups = db.get_group_list()
-    group_no = random.choice(old_groups)
-    group = Group(name="New group")
-    group2 = app.group.modify_group_by_id(group_no.id, group)
+    group = random.choice(old_groups)
+    group_mod = Group(name="New group")
+    app.group.modify_group_by_id(group.id, group_mod)
     new_groups = db.get_group_list()
     assert len(old_groups) == len(new_groups)
-    old_groups.remove(group_no)
-    old_groups.append(group2)
-    assert old_groups == new_groups
+    assert sorted(new_groups, key=Group.id_or_max) == sorted(db.get_group_list(), key=Group.id_or_max)
     if check_ui:
         assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 

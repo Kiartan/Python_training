@@ -8,19 +8,15 @@ def test_modify_contact(app, db, check_ui):
     if len(db.get_contact_list()) == 0:
         app.contact.create(Contact(firstname="test"))
     old_contacts = db.get_contact_list()
-    # (old_contacts)
     contact = random.choice(old_contacts)
     contact_mod = Contact(firstname="edit1", middlename="edit1", lastname="edit1", nickname="edit1", title="edit1",
                           company="edit1", address="edit1", phone_home="edit2", phone_mobile="edit2",
                           phone_work="edit2", fax="edit2", email="edit2", email2="edit2", email3="edit2",
                           homepage="edit2", bday="18", bmonth="May", byear="1992", aday="13", amonth="June",
                           ayear="edit3", address2="edit4", phone2="edit4", notes="edit4")
-    contact2 = app.contact.modify_contact_by_id(contact.id, contact_mod)
+    app.contact.modify_contact_by_id(contact.id, contact_mod)
     new_contacts = db.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
-    old_contacts.remove(contact)
-    old_contacts.append(contact2)
-    print(old_contacts)
-    #assert sorted(old_contacts, key=Group.id_or_max) == sorted(new_contacts, key=Group.id_or_max)
-    #if check_ui:
-        #assert sorted(new_contacts, key=Group.id_or_max) == sorted(app.contact.get_contact_list(), key=Group.id_or_max)
+    assert sorted(new_contacts, key=Group.id_or_max) == sorted(db.get_contact_list(), key=Group.id_or_max)
+    if check_ui:
+        assert sorted(new_contacts, key=Group.id_or_max) == sorted(app.contact.get_contact_list(), key=Group.id_or_max)
