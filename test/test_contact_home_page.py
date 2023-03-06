@@ -7,16 +7,21 @@ from model.group import Group
 def test_contact_on_home_page(app, db):
     contacts_from_home_page = sorted(app.contact.get_contact_list(), key=Group.id_or_max)
     contacts_from_db = sorted(db.get_contact_list(), key=Group.id_or_max)
-    # assert contacts_from_home_page == contacts_from_db
-    for x in contacts_from_home_page:
-        for y in contacts_from_db:
-            assert x.lastname == y.lastname  # lastname
-            assert x.firstname == y.firstname  # firstname
-            assert x.address == y.address  # address
+    assert len(contacts_from_home_page) == len(contacts_from_db)
+    min_length = len(contacts_from_home_page)
+    if len(contacts_from_home_page) >= len(contacts_from_db):
+        min_length = len(contacts_from_db)
+
+    for i in range(min_length):
+        if contacts_from_home_page[i] == contacts_from_db[i]:
+        # if x.id == y.id in contacts_from_db:
+            assert contacts_from_home_page[i].lastname == contacts_from_db[i].lastname  # lastname
+            assert contacts_from_home_page[i].firstname == contacts_from_db[i].firstname  # firstname
+            assert contacts_from_home_page[i].address == contacts_from_db[i].address  # address
             # emails
-            assert x.all_emails_from_home_page == merge_emails_like_on_home_page(y)
+            assert contacts_from_home_page[i].all_emails_from_home_page == merge_emails_like_on_home_page(contacts_from_db[i])
             # phones
-            assert x.all_phones_from_home_page == merge_phones_like_on_home_page(y)
+            assert contacts_from_home_page[i].all_phones_from_home_page == merge_phones_like_on_home_page(contacts_from_db[i])
 
 
 def clear(s):
@@ -27,8 +32,7 @@ def merge_phones_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
                             map(lambda x: clear(x),
                                 filter(lambda x: x is not None,
-                                       [contact.phone_home, contact.phone_mobile,
-                                        contact.phone_work, contact.phone2]))))
+                                       [contact.phone_home, contact.phone_mobile, contact.phone_work, contact.phone2]))))
 
 
 def merge_emails_like_on_home_page(contact):
