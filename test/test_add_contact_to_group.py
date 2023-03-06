@@ -3,7 +3,6 @@ from model.group import Group
 from model.contact import Contact
 from fixture.orm import ORMFixture
 import random
-from fixture.db import DbFixture
 
 
 orm = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
@@ -20,13 +19,11 @@ def test_add_contact_to_group(app, db):
     group_list = orm.get_group_list()
     group = random.choice(group_list)
     start_list = orm.get_contacts_in_group(group)
-    #print(group.id)
     app.contact.add_contact_to_group_by_id(contact.id, group.id)
     check_list = orm.get_contacts_in_group(group)
-    print(group.id, contact, start_list, check_list)
     assert len(start_list) + 1 == len(check_list)
-    # start_list.append(contact)
-    # assert sorted(start_list, key=Group.id_or_max) == sorted(check_list, key=Group.id_or_max)
+    start_list.append(contact)
+    assert sorted(start_list, key=Group.id_or_max) == sorted(check_list, key=Group.id_or_max)
 
 
     # old_contacts = db.get_contact_list()

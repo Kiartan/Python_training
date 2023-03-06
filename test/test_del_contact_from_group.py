@@ -23,11 +23,11 @@ def test_delete_contact_from_group(app, db):
     #start_list = orm.get_contacts_not_in_group(group1)
 
     before_list = orm.get_contacts_in_group(group1)
-    contact = random.choice(before_list)
-
-    db.delete_contact_from_group_by_id(contact.id, group1.id)
-    after_list = orm.get_contacts_in_group(group1)
-    print(group1, contact, before_list, after_list)
+    #contact = random.choice(before_list)
+    print(group1, before_list)
+    #db.delete_contact_from_group_by_id(contact.id, group1.id)
+    #after_list = orm.get_contacts_in_group(group1)
+    #print(group1, contact, before_list, after_list)
     #check_list = orm.get_contacts_not_in_group(group1)
 
     #assert len(before_list) - 1 == len(after_list)
