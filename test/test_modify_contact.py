@@ -15,8 +15,11 @@ def test_modify_contact(app, db, check_ui):
                           homepage="edit2", bday="18", bmonth="May", byear="1992", aday="13", amonth="June",
                           ayear="edit3", address2="edit4", phone2="edit4", notes="edit4")
     app.contact.modify_contact_by_id(contact.id, contact_mod)
+    # old_contacts_mod = map(lambda x: x if x != contact else contact_mod, old_contacts)
     new_contacts = db.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
-    assert sorted(new_contacts, key=Group.id_or_max) == sorted(db.get_contact_list(), key=Group.id_or_max)
+    position = old_contacts.index(contact)
+    old_contacts[position] = contact_mod
+    assert sorted(old_contacts, key=Group.id_or_max) == sorted(new_contacts, key=Group.id_or_max)
     if check_ui:
         assert sorted(new_contacts, key=Group.id_or_max) == sorted(app.contact.get_contact_list(), key=Group.id_or_max)

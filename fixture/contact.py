@@ -206,9 +206,9 @@ class ContactHelper:
 
     def add_to_certain_group(self, id):
         wd = self.app.wd
-        wd.find_element(By. NAME, "to_group").click()
-        wd.find_element(By.XPATH, "//option[@value='%s']" % int(id)).click()
+        Select(wd.find_element(By.NAME, "to_group")).select_by_value(id)
+        # wd.find_element(By. NAME, "to_group").click()
+        # wd.find_element(By.XPATH, "//option[@value='%s']" % int(id)).click()
         wd.find_element(By.NAME, "add").click()
 
 
-#/html/body/div/div[4]/form[2]/div[4]/select/option[6]
