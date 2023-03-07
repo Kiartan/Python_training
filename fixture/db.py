@@ -47,22 +47,20 @@ class DbFixture:
         try:
             cursor.execute("select group_id from address_in_groups where deprecated='0000-00-00 00:00:00'")
             for row in cursor:
-                (id) = row
+                (id,) = row
                 list.append(Group(id=str(id)))
         finally:
             cursor.close()
         return list
 
-    def delete_contact_from_group_by_id(self, id1, id2):
+    def delete_contact_from_group_by_id(self, contact, group):
         # id1 = contact id
         # id2 = group id
         cursor = self.connection.cursor()
         try:
-            cursor.execute("delete from address_in_groups where `address_in_groups`.`id` = id1 and `address_in_groups`.`group_id` = id2")
+            cursor.execute("delete from address_in_groups where `address_in_groups`.`id` = %s and `address_in_groups`.`group_id` = %s" % (contact, group))
         finally:
             cursor.close()
 
     def destroy(self):
         self.connection.close()
-
-# SELECT group_list.group_id, group_list.group_name, address_in_groups.id, address_in_groups.created FROM `group_list` inner join address_in_groups on group_list.group_id = address_in_groups.group_id where group_list.group_id = 140
