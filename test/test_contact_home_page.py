@@ -13,9 +13,8 @@ def test_contact_on_home_page(app, db):
         min_length = len(contacts_from_db)
 
     for i in range(min_length):
-        if contacts_from_home_page[i] == contacts_from_db[i]:
-            print(contacts_from_home_page[i], contacts_from_db[i])
-        # if x.id == y.id in contacts_from_db:
+        if contacts_from_home_page[i].id == contacts_from_db[i].id:
+            # print(contacts_from_home_page[i], contacts_from_db[i])
             assert contacts_from_home_page[i].lastname == contacts_from_db[i].lastname  # lastname
             assert contacts_from_home_page[i].firstname == contacts_from_db[i].firstname  # firstname
             assert contacts_from_home_page[i].address == contacts_from_db[i].address  # address
